@@ -97,8 +97,8 @@ class StorageWrapper:
         self.download_history = {}
         self.failed_pieces = {}
         self.out_of_place = 0
-        self.write_buf_max = config['write_buffer_size'] * 1048576L
-        self.write_buf_size = 0L
+        self.write_buf_max = config['write_buffer_size'] * 1048576
+        self.write_buf_size = 0
         self.write_buf = {}   # structure:  piece: [(start, data), ...]
         self.write_buf_list = []
 
@@ -177,10 +177,10 @@ class StorageWrapper:
 
         self.check_targets = {}
         got = set()
-        for v in self.places.itervalues():
+        for v in self.places.values():
             assert v not in got
             got.add(v)
-        for i in xrange(len(self.hashes)):
+        for i in range(len(self.hashes)):
             if i in self.places:  # restored from pickled
                 self.check_targets[self.hashes[i]] = []
                 if self.places[i] == i:
@@ -214,7 +214,7 @@ class StorageWrapper:
 
     def _markgot(self, piece, pos):
         if DEBUG:
-            print str(piece) + ' at ' + str(pos)
+            print(piece, ' at ', pos)
         self.places[piece] = pos
         self.have[piece] = True
         len = self._piecelen(piece)
@@ -279,7 +279,7 @@ class StorageWrapper:
             self.holes = []
             return False
         self.tomove = float(self.out_of_place)
-        for i in xrange(len(self.hashes)):
+        for i in range(len(self.hashes)):
             if i not in self.places:
                 self.places[i] = i
             elif self.places[i] != i:
@@ -535,7 +535,7 @@ class StorageWrapper:
     def _move_piece(self, index, newpos):
         oldpos = self.places[index]
         if DEBUG:
-            print 'moving {} from {} to {}'.format(index, oldpos, newpos)
+            print('moving {} from {} to {}'.format(index, oldpos, newpos))
         assert oldpos != index
         assert oldpos != newpos
         assert index == newpos or newpos not in self.places
@@ -606,7 +606,7 @@ class StorageWrapper:
                 # movement is automatically limited.
                 self.blocked_moveout.add(index)
             return False
-        for p, v in self.places.iteritems():
+        for p, v in self.places.items():
             if v == index:
                 break
         else:
@@ -623,8 +623,8 @@ class StorageWrapper:
             while self._clear_space(index):
                 pass
             if DEBUG:
-                print 'new place for {} at {}'.format(index,
-                                                      self.places[index])
+                print('new place for {} at {}'.format(index,
+                                                      self.places[index]))
         if self.flag.isSet():
             return
 
@@ -674,7 +674,7 @@ class StorageWrapper:
             self.stat_numflunked += 1
 
             self.failed_pieces[index] = set()
-            allsenders = set(self.download_history[index].itervalues())
+            allsenders = set(self.download_history[index].values())
             if len(allsenders) == 1:
                 culprit = allsenders.pop()
                 if culprit is not None:
@@ -689,7 +689,7 @@ class StorageWrapper:
         self.amount_left -= length
         self.stat_numdownloaded += 1
 
-        for d in self.download_history[index].itervalues():
+        for d in self.download_history[index].values():
             if d is not None:
                 d.good(index)
         del self.download_history[index]
@@ -769,7 +769,7 @@ class StorageWrapper:
         if not self.double_check:
             return
         sources = []
-        for p, v in self.places.iteritems():
+        for p, v in self.places.items():
             if v in pieces_to_check:
                 sources.append(p)
         assert len(sources) == len(pieces_to_check)
@@ -789,7 +789,7 @@ class StorageWrapper:
 
     def reblock(self, new_blocked):
         # assume downloads have already been canceled and chunks made inactive
-        for i in xrange(len(new_blocked)):
+        for i in range(len(new_blocked)):
             if new_blocked[i] and not self.blocked[i]:
                 length = self._piecelen(i)
                 self.amount_desired -= length
@@ -824,7 +824,7 @@ class StorageWrapper:
 
         self.blocked_movein = OrderedSet()
         self.blocked_moveout = OrderedSet()
-        for p, v in self.places.iteritems():
+        for p, v in self.places.items():
             if p != v:
                 if self.blocked[p] and not self.blocked[v]:
                     self.blocked_movein.add(p)
@@ -864,7 +864,7 @@ class StorageWrapper:
         pieces = Bitfield(len(self.hashes))
         places = []
         partials = []
-        for p in xrange(len(self.hashes)):
+        for p in range(len(self.hashes)):
             if self.blocked[p] or p not in self.places:
                 continue
             h = self.have[p]
@@ -909,7 +909,7 @@ class StorageWrapper:
                 assert not data.get('places', None)
                 assert not data.get('partials', None)
                 have = Bitfield(len(self.hashes))
-                for i in xrange(len(self.hashes)):
+                for i in range(len(self.hashes)):
                     have[i] = True
                 assert have.complete
                 _places = []
@@ -919,11 +919,11 @@ class StorageWrapper:
                 _places = data['places']
                 assert len(_places) % 2 == 0
                 _places = [_places[x:x + 2]
-                           for x in xrange(0, len(_places), 2)]
+                           for x in range(0, len(_places), 2)]
                 _partials = data['partials']
                 assert len(_partials) % 2 == 0
                 _partials = [_partials[x:x + 2]
-                             for x in xrange(0, len(_partials), 2)]
+                             for x in range(0, len(_partials), 2)]
 
             for index, place in _places:
                 if place not in valid_places:
@@ -934,7 +934,7 @@ class StorageWrapper:
                 got.add(index)
                 got.add(place)
 
-            for index in xrange(len(self.hashes)):
+            for index in range(len(self.hashes)):
                 if have[index]:
                     if index not in places:
                         if index not in valid_places:
@@ -960,7 +960,7 @@ class StorageWrapper:
                     places[index] = index
                     got.add(index)
                 assert len(plist) % 2 == 0
-                plist = [plist[x:x + 2] for x in xrange(0, len(plist), 2)]
+                plist = [plist[x:x + 2] for x in range(0, len(plist), 2)]
                 dirty[index] = plist
                 stat_active.add(index)
                 download_history[index] = {}
@@ -969,7 +969,7 @@ class StorageWrapper:
                 l = []
                 if plist[0][0] > 0:
                     l.append((0, plist[0][0]))
-                for i in xrange(len(plist) - 1):
+                for i in range(len(plist) - 1):
                     end = plist[i][0] + plist[i][1]
                     assert not end > plist[i + 1][0]
                     l.append((end, plist[i + 1][0] - end))

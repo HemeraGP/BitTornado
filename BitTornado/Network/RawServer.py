@@ -3,7 +3,7 @@ import bisect
 import socket
 import select
 import threading
-from cStringIO import StringIO
+from io import StringIO
 from traceback import print_exc
 from .SocketHandler import SocketHandler
 from BitTornado.clock import clock
@@ -33,7 +33,7 @@ def autodetect_socket_style():
 READSIZE = 32768
 
 
-class RawServer(object) :
+class RawServer(object):
     def __init__(self, doneflag, timeout_check_interval, timeout, noisy=True,
                  ipv6_enable=True, failfunc=lambda x: None, errorfunc=None,
                  sockethandler=None, excflag=threading.Event()):

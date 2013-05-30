@@ -11,16 +11,16 @@ icons = ['icon_bt.ico', 'icon_done.ico',
          'black.ico', 'blue.ico', 'green.ico', 'red.ico', 'white.ico',
          'yellow.ico', 'black1.ico', 'green1.ico', 'yellow1.ico', 'alloc.gif']
 
-width = 60
+width = 72
 
 iconEncodings = []
 
 for icon in icons:
     with open(os.path.join('icons', icon), 'rb') as ff:
         d = binascii.b2a_base64(zlib.compress(ff.read())).strip()
-    key = '    "{}":\n'.format(icon)
-    value = ' +\n'.join('        "{}"'.format(d[i:i + width])
-                        for i in xrange(0, len(d), width))
+    key = '    "{}": '.format(icon)
+    value = '\n    '.join('"{}"'.format(d[max(i, 0):i + width].decode('utf-8'))
+                          for i in range(-len(key) + 4, len(d), width))
     iconEncodings.append(key + value)
 
 with open('CreateIcons.py', 'w') as f:

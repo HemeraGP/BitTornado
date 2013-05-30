@@ -124,7 +124,7 @@ class SocketHandler(object):
 
     def scan_for_timeouts(self):
         t = clock() - self.timeout
-        for s in self.single_sockets.itervalues():
+        for s in self.single_sockets.values():
             if s.last_hit < t and s.socket is not None:
                 self._close_socket(s)
 
@@ -165,7 +165,7 @@ class SocketHandler(object):
                 server.listen(64)
                 self.poll.register(server, POLLIN)
             except socket.error as e:
-                for server in self.servers.itervalues():
+                for server in self.servers.values():
                     try:
                         server.close()
                     except:
@@ -179,7 +179,7 @@ class SocketHandler(object):
             raise socket.error('unable to open server port')
         if upnp:
             if not UPnP_open_port(port):
-                for server in self.servers.itervalues():
+                for server in self.servers.values():
                     try:
                         server.close()
                     except:
@@ -272,7 +272,7 @@ class SocketHandler(object):
                     self.poll.unregister(s)
                     s.close()
                     del self.servers[sock]
-                    print "lost server socket"
+                    print("lost server socket")
                 elif len(self.single_sockets) < self.max_connects:
                     try:
                         newsock, addr = s.accept()
@@ -327,7 +327,7 @@ class SocketHandler(object):
             connects = len(self.single_sockets)
             to_close = int(connects * 0.05) + 1   # close 5% of sockets
             self.max_connects = connects - to_close
-            closelist = self.single_sockets.itervalues()
+            closelist = self.single_sockets.values()
             random.shuffle(closelist)
             closelist = closelist[:to_close]
             for sock in closelist:
@@ -341,12 +341,12 @@ class SocketHandler(object):
                 'upnp': self.port_forwarded is not None}
 
     def shutdown(self):
-        for ss in self.single_sockets.itervalues():
+        for ss in self.single_sockets.values():
             try:
                 ss.close()
             except:
                 pass
-        for server in self.servers.itervalues():
+        for server in self.servers.values():
             try:
                 server.close()
             except:

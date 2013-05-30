@@ -113,7 +113,7 @@ class NewSocketHandler(object):     # hand a new socket off where it belongs
 
     def read_crypto_header(self, s):
         self.encrypter.received_key(s)
-        self.write(self.encrypter.pubkey + self.encrypter.padding())
+        self.write(self.encrypter.padded_pubkey())
         self._max_search = 520
         return 0, self.read_crypto_block3a
 
@@ -224,7 +224,7 @@ class MultiHandler(object):
 
     def listen_forever(self):
         self.rawserver.listen_forever(self)
-        for srs in self.singlerawservers.itervalues():
+        for srs in self.singlerawservers.values():
             srs.finished = True
             srs.running = False
             srs.doneflag.set()

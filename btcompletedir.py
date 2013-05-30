@@ -17,9 +17,9 @@ def main(argv):
         "each given directory"
 
     if len(argv) < 3:
-        print "{}\n{}\n{}{}".format(usage, desc,
+        print("{}\n{}\n{}{}".format(usage, desc,
                                     formatDefinitions(defaults, 80),
-                                    announcelist_details)
+                                    announcelist_details))
         return 2
 
     try:
@@ -27,8 +27,8 @@ def main(argv):
         for directory in args[1:]:
             completedir(directory, args[0], config)
     except ValueError as e:
-        print 'error: ' + str(e)
-        print 'run with no args for parameter explanations'
+        print('error: ', e)
+        print('run with no args for parameter explanations')
         return 1
 
     return 0

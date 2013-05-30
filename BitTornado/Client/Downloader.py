@@ -77,7 +77,7 @@ class SingleDownload:
         if self.have.complete:
             self.downloader.picker.lost_seed()
         else:
-            for i in xrange(len(self.have)):
+            for i in range(len(self.have)):
                 if self.have[i]:
                     self.downloader.picker.lost_have(i)
         if self.have.complete and self.downloader.storage.is_endgame():
@@ -297,7 +297,7 @@ class SingleDownload:
     def _check_interests(self):
         if self.interested or self.downloader.paused:
             return
-        for i in xrange(len(self.have)):
+        for i in range(len(self.have)):
             if (self.have[i] and not self.downloader.picker.is_blocked(i) and
                 (self.downloader.endgamemode or
                  self.downloader.storage.do_I_have_requests(i))):
@@ -317,7 +317,7 @@ class SingleDownload:
         if have.complete:
             self.downloader.picker.got_seed()
         else:
-            for i in xrange(len(have)):
+            for i in range(len(have)):
                 if have[i]:
                     self.downloader.picker.got_have(i)
         if self.downloader.endgamemode and not self.downloader.paused:
@@ -369,7 +369,7 @@ class Downloader:
         self.endgamemode = False
         self.endgame_queued_pieces = []
         self.all_requests = []
-        self.discarded = 0L
+        self.discarded = 0
 #        self.download_rate = 25000  # 25K/s test rate
         self.download_rate = 0
         self.bytes_requested = 0
@@ -466,7 +466,7 @@ class Downloader:
     def num_disconnected_seeds(self):
         # first expire old ones
         expired = []
-        for id, t in self.disconnectedseeds.iteritems():
+        for id, t in self.disconnectedseeds.items():
             if clock() - t > EXPIRE_TIME:     # Expire old seeds after so long
                 expired.append(id)
         for id in expired:

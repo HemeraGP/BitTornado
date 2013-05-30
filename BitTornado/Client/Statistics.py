@@ -29,13 +29,13 @@ class Statistics:
         self.placesopen = 0
         self.filelistupdated = threading.Event()
         self.filelistupdated.set()
-        frange = xrange(len(files))
+        frange = range(len(files))
         self.filepieces = [[] for x in frange]
         self.filepieces2 = [[] for x in frange]
         self.fileamtdone = [0.0 for x in frange]
         self.filecomplete = [False for x in frange]
         self.fileinplace = [False for x in frange]
-        start = 0L
+        start = 0
         for i in frange:
             l = files[i][1]
             if l == 0:
@@ -125,7 +125,7 @@ class Statistics:
             self.fdatactive = False
 
         if self.piecescomplete != self.picker.numgot:
-            for i in xrange(len(self.filecomplete)):
+            for i in range(len(self.filecomplete)):
                 if self.filecomplete[i]:
                     continue
                 oldlist = self.filepieces[i]
@@ -144,7 +144,7 @@ class Statistics:
 
         if self.filelistupdated.isSet() or \
                 self.placesopen != len(self.storage.places):
-            for i in xrange(len(self.filecomplete)):
+            for i in range(len(self.filecomplete)):
                 if not self.filecomplete[i] or self.fileinplace[i]:
                     continue
                 while self.filepieces2[i]:

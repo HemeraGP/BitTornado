@@ -55,7 +55,7 @@ class RateMeasure:
         t = clock()
         t1 = int(t)
         l1 = int(self.last)
-        for i in xrange(l1, t1):
+        for i in range(l1, t1):
             self.time *= FACTOR
             self.got *= FACTOR
         self.got += amount

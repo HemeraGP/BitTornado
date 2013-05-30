@@ -27,16 +27,16 @@ from BitTornado.Application.PeerID import createPeerID
 try:
     import curses
     import curses.panel
-    from curses.wrapper import wrapper as curses_wrapper
+    curses_wrapper = curses.wrapper
 except:
-    print 'Textmode GUI initialization failed, cannot proceed.'
-    print
-    print 'This download interface requires the standard Python module ' \
-          '"curses", which is unfortunately not available for the native ' \
-          'Windows port of Python. It is however available for the Cygwin ' \
-          'port of Python, running on all Win32 systems (www.cygwin.com).'
-    print
-    print 'You may still use "btdownloadheadless.py" to download.'
+    print('Textmode GUI initialization failed, cannot proceed.')
+    print()
+    print('This download interface requires the standard Python module '
+          '"curses", which is unfortunately not available for the native '
+          'Windows port of Python. It is however available for the Cygwin '
+          'port of Python, running on all Win32 systems (www.cygwin.com).')
+    print()
+    print('You may still use "btdownloadheadless.py" to download.')
     sys.exit(1)
 
 
@@ -408,17 +408,17 @@ def run(scrwin, errlist, params):
 
 if __name__ == '__main__':
     if sys.argv[1:] == ['--version']:
-        print version
+        print(version)
         sys.exit(0)
     if len(sys.argv) <= 1:
-        print "Usage: btdownloadcurses.py <global options>\n"
-        print get_usage(defaults)
+        print("Usage: btdownloadcurses.py <global options>\n")
+        print(get_usage(defaults))
         sys.exit(1)
 
     errlist = []
     curses_wrapper(run, errlist, sys.argv[1:])
 
     if errlist:
-        print "These errors occurred during execution:"
+        print("These errors occurred during execution:")
         for error in errlist:
-            print error
+            print(error)

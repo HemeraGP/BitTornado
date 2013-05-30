@@ -21,14 +21,14 @@ try:
     import curses.panel
     from curses.wrapper import wrapper as curses_wrapper
 except:
-    print 'Textmode GUI initialization failed, cannot proceed.'
-    print
-    print 'This download interface requires the standard Python module ' \
-          '"curses", which is unfortunately not available for the native ' \
-          'Windows port of Python. It is however available for the Cygwin ' \
-          'port of Python, running on all Win32 systems (www.cygwin.com).'
-    print
-    print 'You may still use "btdownloadheadless.py" to download.'
+    print('Textmode GUI initialization failed, cannot proceed.')
+    print()
+    print('This download interface requires the standard Python module '
+          '"curses", which is unfortunately not available for the native '
+          'Windows port of Python. It is however available for the Cygwin '
+          'port of Python, running on all Win32 systems (www.cygwin.com).')
+    print()
+    print('You may still use "btdownloadheadless.py" to download.')
     sys.exit(1)
 
 Exceptions = []
@@ -260,7 +260,7 @@ def LaunchManyWrapper(scrwin, config):
 
 if __name__ == '__main__':
     if sys.argv[1:] == ['--version']:
-        print version
+        print(version)
         sys.exit(0)
     defaults.extend([
         ('parse_dir_interval', 60,
@@ -280,10 +280,10 @@ if __name__ == '__main__':
                          'options as the new default configuration (only for '
                          'btlaunchmanycurses.py)'))
         if len(sys.argv) < 2:
-            print "Usage: btlaunchmanycurses.py <directory> <global options>\n"
-            print "<directory> - directory to look for .torrent files " \
-                "(semi-recursive)"
-            print get_usage(defaults, 80, configdefaults)
+            print("Usage: btlaunchmanycurses.py <directory> <global options>\n"
+                  "<directory> - directory to look for .torrent files "
+                  "(semi-recursive)")
+            print(get_usage(defaults, 80, configdefaults))
             sys.exit(1)
         config, args = parseargs(sys.argv[1:], defaults, 1, 1, configdefaults)
         if config['save_options']:
@@ -293,12 +293,12 @@ if __name__ == '__main__':
             raise ValueError("Warning: " + args[0] + " is not a directory")
         config['torrent_dir'] = args[0]
     except ValueError as e:
-        print 'error: {}\nrun with no args for parameter explanations' \
-            ''.format(e)
+        print('error: {}\nrun with no args for parameter explanations'
+              ''.format(e))
         sys.exit(1)
 
     curses_wrapper(LaunchManyWrapper, config)
     if Exceptions:
-        print '\nEXCEPTION:'
-        print Exceptions[0]
-        print 'please report this to ' + report_email
+        print('\nEXCEPTION:')
+        print(Exceptions[0])
+        print('please report this to ', report_email)

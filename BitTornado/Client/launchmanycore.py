@@ -11,7 +11,7 @@ from threading import Event
 import os
 from BitTornado.clock import clock
 from BitTornado.Application.PeerID import createPeerID, mapbase64
-from cStringIO import StringIO
+from io import StringIO
 from traceback import print_exc
 
 
@@ -201,10 +201,10 @@ class LaunchMany:
         (self.torrent_cache, self.file_cache, self.blocked_files, added,
          removed) = r
 
-        for hash, data in removed.iteritems():
+        for hash, data in removed.items():
             self.Output.message('dropped "{}"'.format(data['path']))
             self.remove(hash)
-        for hash, data in added.iteritems():
+        for hash, data in added.items():
             self.Output.message('added "{}"'.format(data['path']))
             self.add(hash, data)
 
@@ -283,7 +283,7 @@ class LaunchMany:
         c = self.counter
         self.counter += 1
         x = ''
-        for i in xrange(3):
+        for i in range(3):
             x = mapbase64[c & 0x3F] + x
             c >>= 6
         peer_id = createPeerID(x)

@@ -1,9 +1,8 @@
 from .CurrentRateMeasure import Measure
 from BitTornado.bitfield import TrueBitfield
 from random import randint
-from urlparse import urlparse
-from httplib import HTTPConnection
-from urllib import quote
+from http.client import HTTPConnection
+from urllib.parse import urlparse, quote
 from threading import Thread
 from BitTornado import product_name, version_short
 
@@ -170,7 +169,7 @@ class SingleDownload:
 
     def _get_requests(self):
         self.requests = []
-        self.request_size = 0L
+        self.request_size = 0
         while self.downloader.storage.do_I_have_requests(self.index):
             r = self.downloader.storage.new_request(self.index)
             self.requests.append(r)
@@ -178,7 +177,7 @@ class SingleDownload:
         self.requests.sort()
 
     def _fulfill_requests(self):
-        start = 0L
+        start = 0
         success = True
         while self.requests:
             begin, length = self.requests.pop(0)
