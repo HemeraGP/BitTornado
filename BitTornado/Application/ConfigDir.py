@@ -93,8 +93,8 @@ class ConfigDir(object):
                 try:
                     if isinstance(self.config[key], str):
                         self.config[key] = val
-                    elif isinstance(self.config[key], (int, long)):
-                        self.config[key] = long(val)
+                    elif isinstance(self.config[key], int):
+                        self.config[key] = int(val)
                     elif isinstance(self.config[key], float):
                         self.config[key] = float(val)
                     configkeys.discard(key)

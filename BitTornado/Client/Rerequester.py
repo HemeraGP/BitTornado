@@ -55,7 +55,7 @@ def check_peers(message):
         for peer in peers:
             check_type(peer, dict)
             check_type(peer.get('ip'), str)
-            check_type(peer.get('port'), (int, long), pred=lambda x: x <= 0)
+            check_type(peer.get('port'), int, pred=lambda x: x <= 0)
             if 'peer id' in peer:
                 check_type(peer.get('peer id'), str,
                            pred=lambda x: len(x) != 20)
@@ -63,13 +63,13 @@ def check_peers(message):
     elif not isinstance(peers, str) or len(peers) % 6 != 0:
         raise ValueError
 
-    check_type(message.get('interval', 1), (int, long), pred=lambda x: x <= 0)
-    check_type(message.get('min interval', 1), (int, long),
+    check_type(message.get('interval', 1), int, pred=lambda x: x <= 0)
+    check_type(message.get('min interval', 1), int,
                pred=lambda x: x <= 0)
     check_type(message.get('tracker id', ''), str)
-    check_type(message.get('num peers', 0), (int, long), pred=lambda x: x < 0)
-    check_type(message.get('done peers', 0), (int, long), pred=lambda x: x < 0)
-    check_type(message.get('last', 0), (int, long), pred=lambda x: x < 0)
+    check_type(message.get('num peers', 0), int, pred=lambda x: x < 0)
+    check_type(message.get('done peers', 0), int, pred=lambda x: x < 0)
+    check_type(message.get('last', 0), int, pred=lambda x: x < 0)
 
 
 class Rerequester:

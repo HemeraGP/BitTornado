@@ -25,7 +25,7 @@ DH_BYTES = 96
 
 def bytetonum(bytestr):
     """Convert a byte string to an equivalent integer"""
-    return long(binascii.hexlify(bytestr), 16)
+    return int(binascii.hexlify(bytestr), 16)
 
 
 def numtobyte(integer):

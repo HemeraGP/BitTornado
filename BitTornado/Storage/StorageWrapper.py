@@ -47,10 +47,10 @@ class StorageWrapper:
                  check_hashes=True, data_flunked=lambda x: None, backfunc=None,
                  config={}, unpauseflag=fakeflag(True)):
         self.storage = storage
-        self.request_size = long(request_size)
+        self.request_size = int(request_size)
         self.hashes = hashes
-        self.piece_size = long(piece_size)
-        self.piece_length = long(piece_size)
+        self.piece_size = int(piece_size)
+        self.piece_length = int(piece_size)
         self.finished = finished
         self.failed = failed
         self.statusfunc = statusfunc

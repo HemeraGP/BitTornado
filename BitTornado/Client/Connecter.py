@@ -7,7 +7,7 @@ DEBUG2 = False
 
 
 def toint(s):
-    return long(hexlify(s), 16)
+    return int(hexlify(s), 16)
 
 
 def tobinary(i):

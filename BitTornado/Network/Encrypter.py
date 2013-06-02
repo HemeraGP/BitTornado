@@ -12,7 +12,7 @@ option_pattern = chr(0) * 8
 
 
 def toint(s):
-    return long(hexlify(s), 16)
+    return int(hexlify(s), 16)
 
 
 def tobinary16(i):

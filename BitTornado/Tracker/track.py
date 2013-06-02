@@ -137,14 +137,14 @@ def statefiletemplate(x):
                     if not isinstance(info.get('ip', ''), str):
                         raise ValueError
                     port = info.get('port')
-                    if not isinstance(port, (int, long)) or port < 0:
+                    if not isinstance(port, int) or port < 0:
                         raise ValueError
                     left = info.get('left')
-                    if not isinstance(left, (int, long)) or left < 0:
+                    if not isinstance(left, int) or left < 0:
                         raise ValueError
-                    if not isinstance(info.get('supportcrypto'), (int, long)):
+                    if not isinstance(info.get('supportcrypto'), int):
                         raise ValueError
-                    if not isinstance(info.get('requirecrypto'), (int, long)):
+                    if not isinstance(info.get('requirecrypto'), int):
                         raise ValueError
         elif cname == 'completed':
             # The 'completed' key is a dictionary of SHA hashes (torrent ids)
@@ -154,7 +154,7 @@ def statefiletemplate(x):
             # ... each torrent has an integer value
             for y in cinfo.values():
                 # ... for the number of reported completions for that torrent
-                if not isinstance(y, (int, long)):
+                if not isinstance(y, int):
                     raise ValueError
         elif cname == 'allowed':
             # a list of info_hashes and included data
@@ -690,10 +690,10 @@ class Tracker:
         port = params('cryptoport')
         if port is None:
             port = params('port', '')
-        port = long(port)
+        port = int(port)
         if port < 0 or port > 65535:
             raise ValueError('invalid port')
-        left = long(params('left', ''))
+        left = int(params('left', ''))
         if left < 0:
             raise ValueError('invalid amount left')
         #uploaded = long(params('uploaded',''))
