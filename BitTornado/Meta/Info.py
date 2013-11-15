@@ -203,7 +203,7 @@ class Info(dict):   # pylint: disable=R0904
             self.size = sum(entry['length'] for entry in self._files)
         elif 'length' in params:
             self.size = params['length']
-            self._files = [{'path': self.name, 'length': self.size}]
+            self._files = [{'path': self['name'], 'length': self.size}]
         else:
             self._files = []
             self.size = size
