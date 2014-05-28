@@ -124,7 +124,7 @@ class SocketHandler(object):
 
     def scan_for_timeouts(self):
         t = clock() - self.timeout
-        for s in self.single_sockets.values():
+        for s in list(self.single_sockets.values()):
             if s.last_hit < t and s.socket is not None:
                 self._close_socket(s)
 
@@ -184,8 +184,8 @@ class SocketHandler(object):
                         server.close()
                     except:
                         pass
-                    self.servers = None
-                    self.interfaces = None
+                self.servers = None
+                self.interfaces = None
                 raise socket.error(UPnP_ERROR)
             self.port_forwarded = port
         self.port = port
@@ -327,7 +327,7 @@ class SocketHandler(object):
             connects = len(self.single_sockets)
             to_close = int(connects * 0.05) + 1   # close 5% of sockets
             self.max_connects = connects - to_close
-            closelist = self.single_sockets.values()
+            closelist = list(self.single_sockets.values())
             random.shuffle(closelist)
             closelist = closelist[:to_close]
             for sock in closelist:
@@ -341,7 +341,7 @@ class SocketHandler(object):
                 'upnp': self.port_forwarded is not None}
 
     def shutdown(self):
-        for ss in self.single_sockets.values():
+        for ss in list(self.single_sockets.values()):
             try:
                 ss.close()
             except:
