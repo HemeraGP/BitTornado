@@ -193,9 +193,6 @@ class Info(dict):   # pylint: disable=R0904
         """
         super(Info, self).__init__()
 
-        self.encoding = params.get('encoding', sys.getfilesystemencoding())
-
-        # Use encoding to set name
         self['name'] = name
 
         if 'files' in params:
